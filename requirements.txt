@@ -1,0 +1,11 @@
+nltk
+spacy
+bs4
+contractions
+autocorrect
+pandas
+seaborn
+matplotlib
+scikit-learn
+xgboost
+Gooey==1.0.3

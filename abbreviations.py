@@ -1,0 +1,2 @@
+synonyms = {"": ""}
+abbreviations_map = {"": ""}
