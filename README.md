@@ -28,6 +28,7 @@
  - Run main_gui_program.py file. A graphical user interface will pop up.
  - Data Analysis Pipeline
     - This pipeline will analyse the input file provides. It will consider following points of analysis
+            
         - How many records are there in input data file?
         - How many classes and what is the data distribution of the sentences for each class?
         - What are the most important keywords in the file and how the keywords can be weighted according to their importance.
@@ -37,6 +38,7 @@
          
  - A model selection pipeline which allows you to select multiple text classification models, comapare their accuracies 
    based on the K-Fold Cross-Validation. It supports famous text classification models (linear as well as non-linear)
+   
         - SVM and Linear SVM
         - Logistic Regression
         - Naive Bayes
