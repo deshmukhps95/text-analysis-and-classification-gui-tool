@@ -1,4 +1,4 @@
-# Data Analysis and Report Classification Tool
+# Text Analysis and Classification GUI
 
 ## What's the tool about?
  -  A Data analysis and Text Classification Tool is a python GUI application which has following pipelines built in it.
