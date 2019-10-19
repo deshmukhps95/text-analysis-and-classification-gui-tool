@@ -1,7 +1,7 @@
 # Text Analysis and Classification GUI
 
 ## What's the tool about?
- -  A Data analysis and Text Classification Tool is a python GUI application which has following pipelines built in it.
+ -  Text Analysis and Text Classification GUI is a python application which has following pipelines built in it.
     - Data Analysis
     - Model Selection
     - Training
@@ -66,10 +66,15 @@
     - class
     - sentence
     - ID
+
 ## What is next?
  - We will focus on the following pipelines to be added in the existing workflow
     - data cleaning pipeline with flexibility
     - parameter tuning pipeline(Grid Search Algorithm?)
-    - Dimensionality Reduction Techniques for text  
+    - Dimensionality Reduction Techniques for text
+
+## Contributions 
+ - Prasad S. Manedeshmukh 
+   
 ## License and  copyright
- -  
+ -  Licensed under the [MIT License](LICENSE). 
