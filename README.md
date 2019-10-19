@@ -46,19 +46,19 @@
         - XG Boosting Algorithm
         - Gradient Boosting Algorithm
     
-  ![Screenshot](docs/images/1.JPG)
+  ![Screenshot](miscellaneous/images/1.JPG)
 
  - A training pipeline which allows you to train the model selected from model selection pipeline or any. 
         - Classification Report
         - Confusion Matrix in graphics form
         - Training Accuracy and Validation Accuracy
   
-  ![Screenshot](docs/images/2.JPG)
+  ![Screenshot](miscellaneous/images/2.JPG)
   
  - A prediction pipeline which allows you to provide input file and generate output prediction file 
  
  
-  ![Screenshot](docs/images/3.JPG)
+  ![Screenshot](miscellaneous/images/3.JPG)
 
 ## Format of the input files to be provided
  - Input Dataset files should be provided with .CSV(comma separated values) format
@@ -71,3 +71,5 @@
     - data cleaning pipeline with flexibility
     - parameter tuning pipeline(Grid Search Algorithm?)
     - Dimensionality Reduction Techniques for text  
+## License and  copyright
+ -  
