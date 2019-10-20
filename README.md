@@ -20,7 +20,7 @@
     - If you have anaconda installed on your machine, follow the steps to create conda environment
     ```
         conda create --name text_classification_env pip python=3.6.4 anaconda
-        conda activate aci_env
+        conda activate text_classification_env
         pip install -r requirements.txt
     ```
      
