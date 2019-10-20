@@ -1,6 +1,7 @@
 from os import path
 from gooey import GooeyParser, Gooey
 from data_loader import load_training_data, load_validation_data
+from data_analysis import DataAnalyser
 from preprocessing import TextPreProcessor
 from feature_extraction import FeatureExtractor
 from training import Trainer
@@ -33,7 +34,7 @@ def get_parser():
     )
     sub_parser_data_analysis.set_defaults(pipeline_type="analysis")
     sub_parser_data_analysis.add_argument(
-        "--file_path",
+        "--input_file_path",
         metavar="File Path",
         type=str,
         help="Please provide file to be analysed.",
@@ -42,11 +43,18 @@ def get_parser():
         widget="FileChooser",
     )
     sub_parser_data_analysis.add_argument(
-        "--category_column",
-        metavar="Category",
-        help="Please provide class column name.",
-        default="comments",
+        "--stopwords_file_path",
+        metavar="Stopwords File",
         type=str,
+        help="Please provide file for stopwords.",
+        default="",
+        widget="FileChooser",
+    )
+    sub_parser_data_analysis.add_argument(
+        "--word_cloud",
+        metavar="Word-Cloud",
+        action="store_true",
+        help="Generate word cloud for input file.",
     )
     sub_parser_data_cross_validation = sub_parser.add_parser(
         "Model-Selection", parents=[parent_parser], help="args parse for cnn request"
@@ -260,7 +268,11 @@ def main():
     args = parser.parse_args()
     feature_extractor = FeatureExtractor()
     if args.pipeline_type == "analysis":
-        pass
+        analyser = DataAnalyser(
+            input_file=args.input_file_path, stopwords_file=args.stopwords_file_path
+        )
+        if args.word_cloud:
+            analyser.generate_word_cloud()
     elif args.pipeline_type == "model_selection":
         text_preprocessor = TextPreProcessor(
             stop_words_file_path=args.stopwords_file_path
