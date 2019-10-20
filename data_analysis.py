@@ -24,10 +24,3 @@ class DataAnalyser:
 
     def plot_word_weights(self):
         pass
-
-
-if __name__ == "__main__":
-    da = DataAnalyser(
-        input_file=r"D:\CodeBase\aci-report-classification\TextClassification\Algorithm\Datasets\ValidationDataset\DPUValidationGeometry.csv"
-    )
-    da.get_data_distribution()
