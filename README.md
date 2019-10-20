@@ -72,9 +72,11 @@
     - data cleaning pipeline with flexibility
     - parameter tuning pipeline(Grid Search Algorithm?)
     - Dimensionality Reduction Techniques for text
+ - Thanks for your patience for reading and understanding! You can raise PR and issues for any concerns about design and code.  
 
 ## Contributions 
  - Prasad S. Manedeshmukh 
    
 ## License and  copyright
- -  Licensed under the [MIT License](LICENSE). 
+ -  Licensed under the [MIT License](LICENSE).
+ 
