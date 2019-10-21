@@ -1,6 +1,7 @@
 import re
 import operator
 
+
 def is_number(s):
     try:
         float(s) if "." in s else int(s)
@@ -144,6 +145,8 @@ class Rake(object):
 
         keyword_candidates = generate_candidate_keyword_scores(phrase_list, word_scores)
 
-        sorted_keywords_phrases = sorted(keyword_candidates.items(), key=operator.itemgetter(1), reverse=True)
+        sorted_keywords_phrases = sorted(
+            keyword_candidates.items(), key=operator.itemgetter(1), reverse=True
+        )
 
         return sorted_keywords_phrases

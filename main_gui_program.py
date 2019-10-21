@@ -51,10 +51,23 @@ def get_parser():
         widget="FileChooser",
     )
     sub_parser_data_analysis.add_argument(
+        "--word_thresh",
+        metavar="Word Threshold",
+        type=int,
+        default=100,
+        help="Provide number of important words to be visualised.",
+    )
+    sub_parser_data_analysis.add_argument(
         "--word_cloud",
-        metavar="Word-Cloud",
+        metavar="Word Cloud",
         action="store_true",
         help="Generate word cloud for input file.",
+    )
+    sub_parser_data_analysis.add_argument(
+        "--plot_bar",
+        metavar="Data Distribution",
+        action="store_true",
+        help="Generate plot for visualising data distribution.",
     )
     sub_parser_data_cross_validation = sub_parser.add_parser(
         "Model-Selection", parents=[parent_parser], help="args parse for cnn request"
@@ -268,9 +281,14 @@ def main():
     args = parser.parse_args()
     feature_extractor = FeatureExtractor()
     if args.pipeline_type == "analysis":
-        analyser = DataAnalyser(
-            input_file=args.input_file_path, stopwords_file=args.stopwords_file_path
+        text_preprocessor = TextPreProcessor(
+            stop_words_file_path=args.stopwords_file_path
         )
+        analyser = DataAnalyser(
+            input_file=args.input_file_path, text_preprocessor=text_preprocessor
+        )
+        analyser.get_data_distribution(plot_bar=args.plot_bar)
+        analyser.get_word_weights(word_thresh=args.word_thresh)
         if args.word_cloud:
             analyser.generate_word_cloud()
     elif args.pipeline_type == "model_selection":

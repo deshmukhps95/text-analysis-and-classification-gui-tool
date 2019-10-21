@@ -217,7 +217,7 @@ class TextPreProcessor:
         return " ".join(str(word[0]) for word in keywords)
 
     def process(self, comment):
-        self.preprocessing_step_dict["comment"] = comment
+        self.preprocessing_step_dict["sentence"] = comment
 
         # function call to remove 'HTML' tags from the comment
         comment = strip_html_tags(comment)
@@ -265,6 +265,19 @@ class TextPreProcessor:
 
         return comment
 
-    def get_pre_processing_steps(self):
-        self.process()
+    def get_pre_processing_steps(self, comment):
+        self.process(comment)
         return self.preprocessing_step_dict
+
+    def read_stopwords_in_set(self):
+        stopwords = set()
+        try:
+            with open(self.stop_words_file_path, "r") as file:
+                # stopwords_file must a contain single stop-word per line
+                line = file.readline()
+                while line:
+                    stopwords.add(line.strip())
+                    line = file.readline()
+        except FileNotFoundError as fe:
+            print(f"Stopwords file not found!{fe}")
+        return stopwords

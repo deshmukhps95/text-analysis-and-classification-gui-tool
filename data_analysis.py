@@ -1,45 +1,57 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
+from preprocessing import lower_case_comment
 from wordcloud import WordCloud, STOPWORDS
 
 
 class DataAnalyser:
-    def __init__(self, input_file, stopwords_file):
+    def __init__(self, input_file, text_preprocessor):
         self.data_frame_file = pd.read_csv(input_file)
-        self.stopwords_file = stopwords_file
+        self.text_preprocessor = text_preprocessor
 
-    def read_stopwords_in_set(self):
-        stopwords = set()
-        try:
-            with open(self.stopwords_file, "rb") as file:
-                # stopwords_file must a contain single stop-word per line
-                line = file.readline()
-                while line:
-                    stopwords.add(line.strip())
-                    line = file.readline()
-        except FileNotFoundError as fe:
-            print(f"Stopwords file not found!{fe}")
-        return stopwords
+    def get_data_distribution(self, plot_bar):
+        print(
+            f" Total Records: {len(self.data_frame_file)}",
+            "\n",
+            f"Number of classes: {len(self.data_frame_file['class'].unique())}",
+            "\n",
+            f"Number of records per class:\n {pd.value_counts(self.data_frame_file['class'])}",
+        )
+        if plot_bar:
+            plt.figure(figsize=(8, 6))
+            pd.value_counts(self.data_frame_file["class"]).plot.bar(fontsize=9)
+            plt.show()
 
-    def count_records(self):
-        return len(self.data_frame_file)
+    def get_word_weights(self, word_thresh, plot_word_graph=False):
+        merged_sentences = " ".join(
+            " ".join(word.lower() for word in set(sentence.split(" ")))
+            for sentence in self.data_frame_file["sentence"]
+        )
+        pre_processed_merged_sentences = lower_case_comment(merged_sentences)
 
-    def get_data_distribution(self):
-        count_df = self.data_frame_file.groupby(["class"]).count()[["ID"]]
-        sns.barplot(x=count_df.Type, y=count_df.AnomalyID)
-
-    def plot_bar_x(self, classes, count):
-        raise NotImplementedError
+        phrases = self.text_preprocessor.rake_obj.get_scores(
+            pre_processed_merged_sentences
+        )
+        phrase_list, weight_list = list(), list()
+        for i in range(word_thresh):
+            phrase_list.append(phrases[i][0])
+            weight_list.append(phrases[i][1])
+            print(f"Phrase: {phrases[i][0]} Phrase Weight: {phrases[i][1]}")
+        if plot_word_graph:
+            pass
 
     def generate_word_cloud(self):
-        if self.stopwords_file:
-            stopwords_set = self.read_stopwords_in_set()
+        if self.text_preprocessor.stop_words_file_path:
+            stopwords_set = self.text_preprocessor.read_stopwords_in_set()
         else:
             stopwords_set = STOPWORDS
         word_cloud = WordCloud(
-            stopwords=stopwords_set, background_color="black", width=1200, height=1000
+            stopwords=stopwords_set,
+            background_color="black",
+            width=1200,
+            height=1000,
+            max_words=1000,
         ).generate(
             " ".join(
                 " ".join(word.lower() for word in set(sentence.split(" ")))
@@ -50,13 +62,16 @@ class DataAnalyser:
         plt.axis("off")
         plt.show()
 
-    def plot_word_weights(self):
-        raise NotImplementedError
-
 
 # if __name__ == "__main__":
+#     from preprocessing import TextPreProcessor
+#
 #     a = DataAnalyser(
 #         input_file=r"D:\GitHub\text-analysis-and-classification-gui-tool\example_use_case\data\fake_news_valid.csv",
-#         stopwords_file=r"D:\GitHub\text-analysis-and-classification-gui-tool\example_use_case\stopwords\stopwords_list.txt",
+#         text_preprocessor=TextPreProcessor(
+#             stop_words_file_path=r"D:\GitHub\text-analysis-and-classification-gui-tool\example_use_case\stopwords\stopwords_list.txt"
+#         ),
 #     )
 #     a.generate_word_cloud()
+#     a.get_data_distribution(plot_bar=True)
+#     a.get_word_weights(word_thresh=100)
